@@ -6,7 +6,7 @@ export class Jogador {
     id: number;
     nome: string;
     isBot: boolean;
-    mao: ListaEncadeada<Carta>;
+    mao: ListaEncadeada<Carta> = new ListaEncadeada;
 
     constructor(nome: string, isBot: boolean) {
         this.id = getRandomInt();
