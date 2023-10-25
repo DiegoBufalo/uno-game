@@ -1,27 +1,31 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto acadêmico tem como objetivo desenvolver um jogo de Uno offline para um jogador, onde o jogador jogará contra bots. O jogo será implementado usando estruturas de dados de alto desempenho, com o objetivo de demonstrar o poder dessas estruturas.
 
-Currently, two official plugins are available:
+Objetivos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Os objetivos específicos do projeto são:
 
-## Expanding the ESLint configuration
+- Desenvolver um jogo de Uno offline para um jogador.
+- Implementar o jogo usando estruturas de dados de alto desempenho.
+- Demonstrar o poder das estruturas de dados usando o jogo.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Metodologia
 
-- Configure the top-level `parserOptions` property like this:
+O jogo será desenvolvido usando TypeScript, uma linguagem de programação orientada a objetos que é compatível com JavaScript. As estruturas de dados serão implementadas usando as bibliotecas padrões do TypeScript.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+O jogo será projetado para ser eficiente e usar o mínimo de recursos. As estruturas de dados serão selecionadas com base em seu desempenho e adequação ao jogo.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Resultados esperados
+
+O projeto deve resultar no desenvolvimento de um jogo de Uno offline que seja eficiente e divertido de jogar. O jogo também deve demonstrar o poder das estruturas de dados, mostrando como elas podem ser usadas para criar aplicações complexas e de alto desempenho.
+
+Conclusão
+
+Este projeto é uma oportunidade para desenvolver habilidades em programação e estruturas de dados. O jogo desenvolvido será um produto de valor para a comunidade de jogos.
+
+## Tecnologias
+
+- TypeScript
+- Vite
+- React
