@@ -39,6 +39,28 @@ export class ListaEncadeada<T> {
         return value;
     }
 
+    remove(value: T): void {
+        let aux = this.head;
+        let prev = null;
+
+        while (aux != null && !aux.value === value) {
+            prev = aux;
+            aux = aux.next;
+        }
+
+        if (aux == null) {
+            return;
+        }
+
+        // Se o nó é o primeiro da lista
+        if (prev == null) {
+            this.head = aux.next;
+        } else {
+            // Caso contrário
+            prev.next = aux.next;
+        }
+    }
+
     // Retorna o elemento do início da lista sem removê-lo
     peek(): T | null {
         return this.head === null ? null : this.head.value;
@@ -107,5 +129,21 @@ export class ListaEncadeada<T> {
         }
 
         return this;
+    }
+
+    map<R>(callback: (value: T, index: number) => R): R[] {
+        const result: R[] = [];
+        let current = this.head;
+        let index = 0;
+
+        if (current) {
+            do {
+                result.push(callback(current!.value, index));
+                current = current!.next;
+                index++;
+            } while (current !== this.head);
+        }
+
+        return result;
     }
 }

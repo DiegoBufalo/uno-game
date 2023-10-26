@@ -1,16 +1,16 @@
-import { ListaEncadeada } from "../estruturas/ListaEncadeada"
+import { ListaEncadeadaSimples } from "../estruturas/ListaEncadeadaSimple";
 import { Carta } from "./Carta"
-import { getRandomInt } from "../utils/utils"
 
 export class Jogador {
     id: number;
     nome: string;
     isBot: boolean;
-    mao: ListaEncadeada<Carta> = new ListaEncadeada;
+    mao: ListaEncadeadaSimples<Carta> = new ListaEncadeadaSimples();
 
-    constructor(nome: string, isBot: boolean) {
-        this.id = getRandomInt();
+    constructor(id: number, nome: string, isBot: boolean) {
+        this.id = id;
         this.nome = nome;
         this.isBot = isBot;
+        this.mao = new ListaEncadeadaSimples<Carta>();
     }
 }

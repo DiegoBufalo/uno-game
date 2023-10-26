@@ -56,4 +56,20 @@ export class FilaCircularDuplamenteEncadeada<T> {
     getSize(): number {
         return this.size;
     }
+
+    map<R>(callback: (value: T, index: number) => R): R[] {
+        const result: R[] = [];
+        let current = this.head;
+        let index = 0;
+
+        if (current) {
+            do {
+                result.push(callback(current!.value, index));
+                current = current!.next;
+                index++;
+            } while (current !== this.head);
+        }
+
+        return result;
+    }
 }

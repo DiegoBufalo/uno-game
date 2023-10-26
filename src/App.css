@@ -1,10 +1,122 @@
-.container {
-  width: 100%;
-  height: 95vh;
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.banner {
-  object-fit: fill;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("src/assets/generic/table_1.png");
+  background-size: cover;
+}
+
+.deck {
+  padding: 20px;
+}
+
+/* Posicionamento dos decks de cartas*/
+
+.area {
+  padding: 20px;
+}
+
+.area1 {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.area2 {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.area3 {
+  position: absolute;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
+}
+
+.area4 {
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  transform: translateY(-50%);
+}
+
+.centro {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateY(-50%);
+  transform: translateX(-50%);
+
+  display: flex;
+}
+
+/* estilos das cartas*/
+
+.cartas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartas-1,
+.cartas-2 {
+  display: flex;
+  flex-direction: row;
   width: 100%;
+}
+.cartas-1 > .carta,
+.cartas-2 > .carta {
+  margin: -35px;
+}
+
+.cartas-3,
+.cartas-4 {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+}
+.cartas-3 > .carta,
+.cartas-4 > .carta {
+  margin: -60px;
+}
+
+.cartas-1 > .carta {
+  transform: rotate(180deg);
+}
+.cartas-2 > .carta {
+  transform: rotate(360deg);
+}
+.cartas-3 > .carta {
+  transform: rotate(270deg);
+}
+.cartas-4 > .carta {
+  transform: rotate(90deg);
+}
+
+.monte > img,
+.descarte > img,
+.carta > img {
+  width: 120px;
+  height: 160px;
+}
+
+.cartas-1 > .carta > img:hover,
+.cartas-2 > .carta > img:hover,
+.cartas-3 > .carta > img:hover,
+.cartas-4 > .carta > img:hover {
+  position: relative;
+  bottom: 50px;
 }
