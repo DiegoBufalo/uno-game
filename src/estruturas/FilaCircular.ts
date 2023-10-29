@@ -1,75 +1,80 @@
-import { NoDuplo } from "./No";
+export class FilaCircular<T> {
 
-export class FilaCircularDuplamenteEncadeada<T> {
-    head: NoDuplo<T> | null = null;
-    tail: NoDuplo<T> | null = null;
-    size: number = 0;
+    private elementos: T[] = [];
+    private tamanho: number = 0;
+    private frente: number = 0;
+    private tras: number = 0;
+    private objetoAtual: number = 0;
 
     constructor() { }
 
     // Adiciona um elemento no final da fila
     push(value: T): void {
-        const no = new NoDuplo(value);
-
-        if (this.head === null) {
-            this.head = no;
-            this.tail = no;
-            no.prev = no;
-            no.next = no;
-        } else {
-            this.tail!.next = no;
-            no.prev = this.tail;
-            no.next = this.head;
-            this.head.prev = no;
-            this.tail = no;
+        if (this.tamanho === this.elementos.length) {
+            this.aumentarCapacidade();
         }
 
-        this.size++;
+        this.elementos[this.tras] = value;
+        this.tras = (this.tras + 1) % this.elementos.length;
+        this.tamanho++;
     }
 
     // Remove o elemento do início da fila
     pop(): T | null {
-        if (this.head === null) {
+        if (this.isEmpty()) {
             return null;
         }
 
-        const value = this.head.value;
-        this.head = this.head.next;
-        this.head!.prev = this.tail;
-        this.tail!.next = this.head;
+        const value = this.elementos[this.frente];
+        this.frente = (this.frente + 1) % this.elementos.length;
+        this.tamanho--;
 
-        this.size--;
         return value;
     }
 
     // Retorna o elemento do início da fila sem removê-lo
     peek(): T | null {
-        return this.head === null ? null : this.head.value;
+        return this.isEmpty() ? null : this.elementos[this.frente];
+    }
+
+    // Retorna o objeto atual da fila
+    getObjetoAtual(): T | null {
+        return this.isEmpty() ? null : this.elementos[this.objetoAtual];
+    }
+
+    get(index: number): T | null {
+        if (!this.isEmpty()) {
+            return this.elementos[index];
+        }
+
+        return null;
     }
 
     // Verifica se a fila está vazia
     isEmpty(): boolean {
-        return this.head === null;
+        return this.tamanho === 0;
     }
 
     // Retorna o tamanho da fila
     getSize(): number {
-        return this.size;
+        return this.tamanho;
     }
 
     map<R>(callback: (value: T, index: number) => R): R[] {
-        const result: R[] = [];
-        let current = this.head;
-        let index = 0;
+        return this.elementos.map(callback);
+    }
 
-        if (current) {
-            do {
-                result.push(callback(current!.value, index));
-                current = current!.next;
-                index++;
-            } while (current !== this.head);
+    private aumentarCapacidade(): void {
+        const novaCapacidade = this.elementos.length === 0 ? 1 : this.elementos.length * 2;
+        const novoArray: T[] = new Array(novaCapacidade);
+
+        for (let i = 0; i < this.tamanho; i++) {
+            novoArray[i] = this.elementos[(this.frente + i) % this.elementos.length];
         }
 
-        return result;
+        this.elementos = novoArray;
+        this.frente = 0;
+        this.tras = this.tamanho;
     }
 }
+

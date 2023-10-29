@@ -131,6 +131,10 @@ export class ListaEncadeada<T> {
         return this;
     }
 
+    copy(): ListaEncadeada<T> {
+        return this;
+    }
+
     map<R>(callback: (value: T, index: number) => R): R[] {
         const result: R[] = [];
         let current = this.head;

@@ -30,6 +30,10 @@ export class Pilha<T> {
         return this.items[0];
     }
 
+    copy(): Pilha<T> {
+        return this
+    }
+
     popX(quantity: number): ListaEncadeadaSimples<T> {
         if (quantity > this.size()) quantity = this.size();
         const result: ListaEncadeadaSimples<T> = new ListaEncadeadaSimples();

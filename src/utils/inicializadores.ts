@@ -1,11 +1,10 @@
-import { FilaCircularDuplamenteEncadeada } from "../estruturas/FilaCircular"
+import { FilaCircular } from "estruturas/FilaCircular"
 import { Pilha } from "../estruturas/Pilha"
 import { GameInfoState } from "../interfaces"
 import { Carta } from "../modelos/Carta"
 import { Jogador } from "../modelos/Jogador"
 
-
-export function iniciadorGame(quantidadeBaralho: number = 2, quantidadeJogador: number = 4): GameInfoState {
+export function iniciadorGame(quantidadeBaralho: number = 2): GameInfoState {
     const cartas = (): Pilha<Carta> => {
         const coresCarta = ['red', 'green', 'yellow', 'blue']
         const valoresCarta = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'draw', 'reverse', 'skip'];
@@ -33,24 +32,26 @@ export function iniciadorGame(quantidadeBaralho: number = 2, quantidadeJogador: 
         return cartas;
     }
 
-    const jogadores = (): FilaCircularDuplamenteEncadeada<Jogador> => {
+    const jogadores = (): FilaCircular<Jogador> => {
         // cria a fila de jogadores
-        const fila = new FilaCircularDuplamenteEncadeada<Jogador>();
+        const fila = new FilaCircular<Jogador>();
 
-        // instancia cada um deles, 3 bots e um jogador
-        for (let index = 1; index <= quantidadeJogador; index++) {
-            // regra para colocar o jogador humano como o jogador 2, pq é o que fica na parte de baixo da tela
-            const isBot = index !== 2;
+        const jogador1 = new Jogador(1, `jogador1`, true);
+        jogador1.mao = cartas().popX(5);
 
-            // instancia um jogador
-            const jogador = new Jogador(index, `jogador${index}`, isBot);
+        const jogador2 = new Jogador(2, `jogador2`, false);
+        jogador2.mao = cartas().popX(5);
 
-            // coloca 5 cartas do monte na mão do jogador
-            jogador.mao = cartas().popX(5);
+        const jogador3 = new Jogador(3, `jogador3`, true);
+        jogador3.mao = cartas().popX(5);
 
-            // insere o jogador na fila de jogo
-            fila.push(jogador);
-        }
+        const jogador4 = new Jogador(4, `jogador4`, true);
+        jogador4.mao = cartas().popX(5);
+
+        fila.push(jogador1);
+        fila.push(jogador3);
+        fila.push(jogador2);
+        fila.push(jogador4);
 
         // retorna a fila
         return fila;
@@ -66,7 +67,6 @@ export function iniciadorGame(quantidadeBaralho: number = 2, quantidadeJogador: 
         monte: cartas(),
         descarte: descarte,
         direcao: 'DIREITA',
-        jogadorTurno: jogadores().peek()?.id || 1,
         bloqueado: false,
         compraObrigatoria: 0,
     }

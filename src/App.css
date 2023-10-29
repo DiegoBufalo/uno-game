@@ -61,6 +61,7 @@ body {
   transform: translateX(-50%);
 
   display: flex;
+  cursor: pointer;
 }
 
 /* estilos das cartas*/
@@ -119,4 +120,5 @@ body {
 .cartas-4 > .carta > img:hover {
   position: relative;
   bottom: 50px;
+  cursor: pointer;
 }

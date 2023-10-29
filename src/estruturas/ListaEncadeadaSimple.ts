@@ -68,4 +68,8 @@ export class ListaEncadeadaSimples<T> {
     map<R>(callback: (value: T, index: number) => R): R[] {
         return this.elementos.map(callback);
     }
+
+    copy(): ListaEncadeadaSimples<T> {
+        return this;
+    }
 }
