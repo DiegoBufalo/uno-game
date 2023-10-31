@@ -8,6 +8,7 @@ import { Jogador } from "modelos/Jogador";
 function App() {
   const [state, setState] = useState<GameInfoState>();
   const [indexAtual, setIndexAtual] = useState<0 | 1 | 2 | 3>(0);
+  const modoDev = window.location.pathname.includes('modoDev');
 
   useEffect(() => {
     setState(iniciadorGame(1));
@@ -132,7 +133,13 @@ function App() {
                             className="carta"
                             onClick={() => descartarCarta(j, c)}
                           >
-                            <img src={c.imagem} alt={`${c.valor}_${c.cor}`} />
+
+                          {j.isBot && !modoDev ? 
+                            (<img src="src/assets/generic/deck.png" alt="deck" />) 
+                          : 
+                            (<img src={c.imagem} alt={`${c.valor}_${c.cor}`} />)
+                          }
+                          
                           </div>
                         );
                       })}
