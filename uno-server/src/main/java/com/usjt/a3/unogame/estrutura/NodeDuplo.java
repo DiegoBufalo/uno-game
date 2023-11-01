@@ -12,15 +12,15 @@ public class NodeDuplo<T> {
     }
 
     public T getData() {
-        return data;
+        return this.data;
     }
 
     public NodeDuplo<T> getNext() {
-        return next;
+        return this.next;
     }
 
     public NodeDuplo<T> getPrev() {
-        return prev;
+        return this.prev;
     }
 
     public void setNext(NodeDuplo<T> next) {

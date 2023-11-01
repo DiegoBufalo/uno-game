@@ -26,4 +26,12 @@ public class Partida {
         Carta cartaComprada = monte.pop();
         maoJogadorAtual.add(cartaComprada);
     }
+
+    public void mudaDirecao() {
+        if (this.direcao.equals(Direcao.DIREITA)) {
+            this.direcao = Direcao.ESQUERDA;
+        } else {
+            this.direcao = Direcao.DIREITA;
+        }
+    }
 }

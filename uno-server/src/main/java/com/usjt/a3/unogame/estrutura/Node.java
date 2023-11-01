@@ -10,11 +10,11 @@ public class Node<T> {
     }
 
     public T getData() {
-        return data;
+        return this.data;
     }
 
     public Node<T> getNext() {
-        return next;
+        return this.next;
     }
 
     public void setNext(Node<T> next) {

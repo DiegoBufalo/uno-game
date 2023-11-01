@@ -1,53 +1,44 @@
 package com.usjt.a3.unogame.estrutura;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class FilaCircular<T> {
-    private Node<T> current;
+    private NodeDuplo<T> current;
     private int size;
 
-    private class Node<T> {
-        private T data;
-        private Node<T> next;
-        private Node<T> prev;
-
-        public Node(T data) {
-            this.data = data;
-            this.next = null;
-            this.prev = null;
-        }
-    }
-
     public FilaCircular() {
-        current = null;
-        size = 0;
+        this.current = null;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
-        return size == 0;
+        return this.size == 0;
     }
 
     public int size() {
-        return size;
+        return this.size;
     }
 
     public T getCurrent() {
         if (isEmpty()) {
             throw new IllegalStateException("A fila está vazia.");
         }
-        return current.data;
+        return this.current.getData();
     }
 
     public void add(T data) {
-        Node<T> newNode = new Node<>(data);
+        NodeDuplo<T> newNode = new NodeDuplo<>(data);
         if (isEmpty()) {
-            current = newNode;
-            current.next = current;
-            current.prev = current;
+            this.current = newNode;
+            this.current.setNext(current);
+            this.current.setNext(current);
         } else {
-            newNode.next = current.next;
-            newNode.prev = current;
-            current.next.prev = newNode;
-            current.next = newNode;
-            current = newNode;
+            newNode.setNext(current.getNext());
+            newNode.setPrev(current);
+            this.current.getNext().setPrev(newNode);
+            this.current.setNext(newNode);
+            this.current = newNode;
         }
         size++;
     }
@@ -56,14 +47,14 @@ public class FilaCircular<T> {
         if (isEmpty()) {
             throw new IllegalStateException("A fila está vazia.");
         }
-        current = current.next;
+        this.current = this.current.getNext();
     }
 
     public void movePrev() {
         if (isEmpty()) {
             throw new IllegalStateException("A fila está vazia.");
         }
-        current = current.prev;
+        this.current = this.current.getPrev();
     }
 
     public void print() {
@@ -71,11 +62,26 @@ public class FilaCircular<T> {
             System.out.println("Fila vazia.");
             return;
         }
-        Node<T> temp = current;
+        NodeDuplo<T> temp = this.current;
         do {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
-        } while (temp != current);
+            System.out.print(temp.getData() + " ");
+            temp = temp.getNext();
+        } while (temp != this.current);
         System.out.println();
+    }
+
+    public List<T> toList() {
+        List<T> list = new ArrayList<>();
+        if (isEmpty()) {
+            return list;
+        }
+
+        NodeDuplo<T> temp = this.current;
+        do {
+            list.add(temp.getData());
+            temp = temp.getNext();
+        } while (temp != this.current);
+
+        return list;
     }
 }

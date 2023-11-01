@@ -1,5 +1,8 @@
 package com.usjt.a3.unogame.estrutura;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Pilha<T> {
     private Node<T> top;
     private int size;
@@ -41,5 +44,15 @@ public class Pilha<T> {
         }
 
         return top.getData();
+    }
+
+    public List<T> toList() {
+        List<T> list = new ArrayList<>();
+        Node<T> current = this.top;
+        while (current != null) {
+            list.add(current.getData());
+            current = current.getNext();
+        }
+        return list;
     }
 }

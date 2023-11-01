@@ -2,6 +2,10 @@ package com.usjt.a3.unogame;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+import com.usjt.a3.unogame.modelo.Partida;
 
 @SpringBootApplication
 public class UnoGameApplication {
@@ -10,9 +14,9 @@ public class UnoGameApplication {
 		SpringApplication.run(UnoGameApplication.class, args);
 	}
 
-	// @Bean(name = "teste")
-	// @Scope("singleton")
-	// public Teste createGame() {
-	// return new Teste("A");
-	// }
+	@Bean(name = "partida")
+	@Scope("singleton")
+	public Partida iniciaPartida() {
+		return new Partida();
+	}
 }
