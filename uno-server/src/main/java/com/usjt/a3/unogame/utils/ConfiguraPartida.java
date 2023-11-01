@@ -8,13 +8,14 @@ import com.usjt.a3.unogame.modelo.Jogador;
 import com.usjt.a3.unogame.modelo.Partida;
 
 public class ConfiguraPartida {
-    public static Partida criaPartida() {
+
+    public static Partida criaPartida(String nomeJogador) {
         Partida partida = new Partida();
-        ConfiguraPartida.loadConfig(partida);
+        ConfiguraPartida.loadConfig(partida, nomeJogador);
         return partida;
     }
 
-    private static void loadConfig(Partida partida) {
+    private static void loadConfig(Partida partida, String nomeJogador) {
         String[] coresCarta = new String[] { "red", "green", "yellow", "blue" };
         String[] valoresCarta = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "draw", "reverse",
                 "skip" };
@@ -55,7 +56,7 @@ public class ConfiguraPartida {
         List<Carta> cartas1 = partida.getMonte().popX(5);
         cartas1.forEach(c -> jogador1.getMao().add(c));
 
-        Jogador jogador2 = new Jogador(2L, nameGenerator.getNomeRandom(), false);
+        Jogador jogador2 = new Jogador(2L, nomeJogador, false);
         List<Carta> cartas2 = partida.getMonte().popX(5);
         cartas2.forEach(c -> jogador2.getMao().add(c));
 
@@ -71,6 +72,7 @@ public class ConfiguraPartida {
         partida.getJogadores().add(jogador3);
         partida.getJogadores().add(jogador2);
         partida.getJogadores().add(jogador4);
+        partida.getJogadores().moveNext();
 
         partida.getDescarte().push(partida.getMonte().pop());
     }

@@ -1,5 +1,8 @@
 package com.usjt.a3.unogame.modelo;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.usjt.a3.unogame.estrutura.FilaCircular;
 import com.usjt.a3.unogame.estrutura.ListaEncadeada;
 import com.usjt.a3.unogame.estrutura.Pilha;
@@ -9,6 +12,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Component
+@Scope("singleton")
 public class Partida {
 
     private FilaCircular<Jogador> jogadores = new FilaCircular<Jogador>();
