@@ -1,17 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Children, useState, useEffect, useCallback } from "react";
-import "./App.css";
-import { GameInfoState } from "./interfaces";
-import { iniciadorGame } from "./utils/inicializadores";
+import "./uno.css";
+import { GameInfoState } from "interfaces";
+import { iniciadorGame } from "utils/inicializadores";
 import { Carta } from "modelos/Carta";
 import { Jogador } from "modelos/Jogador";
 
-function App() {
-  const [state, setState] = useState<GameInfoState>();
+function UnoGame() {
+  const [state, setState] = useState<GameInfoState>(new GameInfoState());
+  // const [message] = useState<{ name: string; message: string }>({
+  //   name: "teste",
+  //   message: "teste",
+  // });
   const [indexAtual, setIndexAtual] = useState<0 | 1 | 2 | 3>(0);
-  const modoDev = window.location.pathname.includes('modoDev');
+  const modoDev = window.location.pathname.includes("modoDev");
 
   useEffect(() => {
-    setState(iniciadorGame(1));
+    setState(iniciadorGame(state));
   }, []);
 
   const getTopoDescarte = () => state?.descarte.peek();
@@ -22,8 +27,6 @@ function App() {
 
   // Avança o objeto atual para o próximo
   const moveToNextObject = (): void => {
-    console.log("MoveToNextObject");
-
     if (indexAtual === 0) {
       setIndexAtual(1);
     } else if (indexAtual === 1) {
@@ -37,7 +40,6 @@ function App() {
 
   // Retrocede o objeto atual para o anterior
   const moveToPreviousObject = (): void => {
-    console.log("moveToPreviousObject");
     if (indexAtual === 0) {
       setIndexAtual(3);
     } else if (indexAtual === 1) {
@@ -92,21 +94,34 @@ function App() {
   };
 
   const descartarCarta = (jogador: Jogador, carta: Carta) => {
-    if (!state || state.bloqueado || !jogador || !carta) {
+    if (
+      !state ||
+      state.bloqueado ||
+      !jogador ||
+      !carta ||
+      jogador !== getJogadorAtual()
+    ) {
       return;
     }
 
-    if (jogador === getJogadorAtual()) {
-      setState((prevState) => {
-        const newState = { ...prevState! };
-        jogador.mao.remove(carta);
-        newState.descarte.push(carta);
-        // Adicione código para verificar se a carta pode ser jogada de acordo com as regras do jogo.
-        return newState;
-      });
+    const topo = getTopoDescarte();
+    const newState = { ...state };
 
-      proximoJogador();
+    if (carta.cor !== topo.cor && carta.valor !== topo.valor) {
+      if (carta.cor === "wild" && carta.acao) {
+        carta.acao(newState);
+      } else {
+        return;
+      }
     }
+
+    setState(() => {
+      jogador.mao.remove(carta);
+      newState.descarte.push(carta);
+      // Adicione código para verificar se a carta pode ser jogada de acordo com as regras do jogo.
+      return newState;
+    });
+    proximoJogador();
   };
 
   return (
@@ -124,25 +139,38 @@ function App() {
             state.jogadores.map((j) => {
               return (
                 <div key={j.id} className={`area area${j.id}`}>
+                  <div
+                    className={`player-name ${
+                      getJogadorAtual()?.id === j.id ? "turno" : ""
+                    }`}
+                  >
+                    {j.nome}
+                  </div>
                   <div className="deck">
-                    {/* <div className="nome-jogador">{j.nome}</div> */}
                     <div className={`cartas cartas-${j.id}`}>
-                      {j.mao.map((c) => {
-                        return (
-                          <div
-                            className="carta"
-                            onClick={() => descartarCarta(j, c)}
-                          >
-
-                          {j.isBot && !modoDev ? 
-                            (<img src="src/assets/generic/deck.png" alt="deck" />) 
-                          : 
-                            (<img src={c.imagem} alt={`${c.valor}_${c.cor}`} />)
-                          }
-                          
-                          </div>
-                        );
-                      })}
+                      {Children.toArray(
+                        j.mao.map((c) => {
+                          return (
+                            <div
+                              key={c.id}
+                              className="carta"
+                              onClick={() => descartarCarta(j, c)}
+                            >
+                              {j.isBot && !modoDev ? (
+                                <img
+                                  src="src/assets/generic/deck.png"
+                                  alt="deck"
+                                />
+                              ) : (
+                                <img
+                                  src={c.imagem}
+                                  alt={`${c.valor}_${c.cor}`}
+                                />
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
                     </div>
                   </div>
                 </div>
@@ -154,4 +182,4 @@ function App() {
   );
 }
 
-export default App;
+export default UnoGame;

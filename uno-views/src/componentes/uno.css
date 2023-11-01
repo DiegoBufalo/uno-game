@@ -4,6 +4,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  font-family: cursive;
 }
 
 .container {
@@ -22,7 +23,13 @@ body {
 /* Posicionamento dos decks de cartas*/
 
 .area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: 20px;
+  gap: 50px;
 }
 
 .area1 {
@@ -62,6 +69,20 @@ body {
 
   display: flex;
   cursor: pointer;
+}
+
+.player-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: azure;
+  height: 20px;
+  width: 250px;
+}
+
+.turno {
+  font-size: 30px;
+  color: darkorange;
+  filter: brightness(1.5);
 }
 
 /* estilos das cartas*/
