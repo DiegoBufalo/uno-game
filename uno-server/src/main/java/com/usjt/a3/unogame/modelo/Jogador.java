@@ -13,8 +13,9 @@ public class Jogador {
     private Boolean isBot = false;
     private ListaEncadeada<Carta> mao = new ListaEncadeada<Carta>();
 
-    public Jogador(Long id, String nome) {
+    public Jogador(Long id, String nome, Boolean isBot) {
         this.id = id;
         this.nome = nome;
+        this.isBot = isBot;
     }
 }

@@ -19,6 +19,10 @@ public class Partida {
     private Integer comprasObrigatorias = 0;
     private Boolean escolheCor = false;
 
+    public Partida() {
+        super();
+    }
+
     public void compraCarta() {
         Jogador jogadorAtual = jogadores.getCurrent();
         ListaEncadeada<Carta> maoJogadorAtual = jogadorAtual.getMao();
@@ -27,11 +31,4 @@ public class Partida {
         maoJogadorAtual.add(cartaComprada);
     }
 
-    public void mudaDirecao() {
-        if (this.direcao.equals(Direcao.DIREITA)) {
-            this.direcao = Direcao.ESQUERDA;
-        } else {
-            this.direcao = Direcao.DIREITA;
-        }
-    }
 }

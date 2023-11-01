@@ -1,5 +1,8 @@
 package com.usjt.a3.unogame.estrutura;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ListaEncadeada<T> {
     private Node<T> head;
     private int size;
@@ -60,5 +63,15 @@ public class ListaEncadeada<T> {
             current = current.getNext();
         }
         System.out.println("null");
+    }
+
+    public List<T> toList() {
+        List<T> list = new ArrayList<>();
+        Node<T> current = head;
+        while (current != null) {
+            list.add(current.getData());
+            current = current.getNext();
+        }
+        return list;
     }
 }

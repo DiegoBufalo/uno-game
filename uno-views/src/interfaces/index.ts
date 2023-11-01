@@ -1,25 +1,24 @@
-import { FilaCircular } from "estruturas/FilaCircular";
-import { Pilha } from "../estruturas/Pilha";
-import { Carta } from "../modelos/Carta";
-import { Jogador } from "../modelos/Jogador";
+export interface Carta {
+    id: string;
+    cor: string;
+    valor: string;
+    imagem: string;
+}
 
+export interface Jogador {
+    id: number;
+    nome: string;
+    isBot: boolean;
+    mao: Carta[];
+}
 
-export class GameInfoState {
-    jogadores: FilaCircular<Jogador>;
-    monte: Pilha<Carta>;
-    descarte: Pilha<Carta>;
+export interface GameInfoState {
+    jogadores: Jogador[];
+    monte: Carta[];
+    descarte: Carta[];
     direcao: 'ESQUERDA' | 'DIREITA';
     bloqueado: boolean;
-    compraObrigatoria: number;
+    comprasObrigatorias: number;
     escolheCor: boolean;
-
-    constructor() {
-        this.jogadores = new FilaCircular<Jogador>();
-        this.monte = new Pilha<Carta>();
-        this.descarte = new Pilha<Carta>();
-        this.direcao = 'DIREITA';
-        this.bloqueado = false;
-        this.compraObrigatoria = 0;
-        this.escolheCor = false;
-    }
+    idJogadorAtual: number;
 }
