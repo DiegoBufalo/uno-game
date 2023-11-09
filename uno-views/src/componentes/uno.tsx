@@ -26,7 +26,7 @@ function UnoGame() {
 
   const comprarCarta = () => {
     api
-      .post("/compra-carta")
+      .put("/compra-carta")
       .then((resp) => {
         setState(resp.data);
       })
@@ -35,9 +35,9 @@ function UnoGame() {
       });
   };
 
-  const descartarCarta = (jogadorId: number, cartaId: string) => {
+  const descartarCarta = (cartaId: string) => {
     api
-      .post(`/descarta-carta/jogador/${jogadorId}/carta/${cartaId}`)
+      .put(`/descarta-carta/${cartaId}`)
       .then((resp) => {
         setState(resp.data);
       })
@@ -48,7 +48,7 @@ function UnoGame() {
 
   useEffect(() => {
     api
-      .get("/load")
+      .post("/init?nomeJogador=Messi")
       .then((resp) => {
         setState(resp.data);
       })
@@ -87,7 +87,7 @@ function UnoGame() {
                             <div
                               key={c.id}
                               className="carta"
-                              onClick={() => descartarCarta(j.id, c.id)}
+                              onClick={() => descartarCarta(c.id)}
                             >
                               {j.isBot && !modoDev ? (
                                 <img

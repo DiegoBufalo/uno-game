@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.usjt.a3.unogame.estrutura.FilaCircular;
+import com.usjt.a3.unogame.estrutura.ListaCircular;
 import com.usjt.a3.unogame.modelo.Jogador;
 
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class JogadorDTO {
         return dto;
     }
 
-    public static List<JogadorDTO> fromJogador(FilaCircular<Jogador> jogadores) {
+    public static List<JogadorDTO> fromJogador(ListaCircular<Jogador> jogadores) {
         List<Jogador> jgs = jogadores.toList();
         return jgs.stream().map(JogadorDTO::fromJogador).collect(Collectors.toList());
     }

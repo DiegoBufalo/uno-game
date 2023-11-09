@@ -3,26 +3,15 @@ package com.usjt.a3.unogame.estrutura;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.usjt.a3.unogame.modelo.Carta;
+
+// Lista usada para guardar as cartas na mao de cada jogador
 public class ListaEncadeada<T> {
     private Node<T> head;
-    private int size;
-
-    public ListaEncadeada() {
-        head = null;
-        size = 0;
-    }
-
-    public boolean isEmpty() {
-        return head == null;
-    }
-
-    public int size() {
-        return size;
-    }
 
     public void add(T data) {
         Node<T> newNode = new Node<>(data);
-        if (isEmpty()) {
+        if (head == null) {
             head = newNode;
         } else {
             Node<T> current = head;
@@ -31,17 +20,16 @@ public class ListaEncadeada<T> {
             }
             current.setNext(newNode);
         }
-        size++;
     }
 
     public void remove(T data) {
-        if (isEmpty()) {
+        if (head == null) {
+            // A lista está vazia, não há nada para remover.
             return;
         }
 
         if (head.getData().equals(data)) {
             head = head.getNext();
-            size--;
             return;
         }
 
@@ -49,29 +37,32 @@ public class ListaEncadeada<T> {
         while (current.getNext() != null) {
             if (current.getNext().getData().equals(data)) {
                 current.setNext(current.getNext().getNext());
-                size--;
                 return;
             }
             current = current.getNext();
         }
     }
 
-    public void print() {
-        Node<T> current = head;
+    public Carta findCarta(String id) {
+        Node<Carta> current = (Node<Carta>) head;
         while (current != null) {
-            System.out.print(current.getData() + " -> ");
+            if (current.getData().getId().equals(id)) {
+                return current.getData();
+            }
             current = current.getNext();
         }
-        System.out.println("null");
+        return null; // Retorna null se o elemento não for encontrado.
     }
 
+    // metodo usado apenas para montar o DTO e mapear para JSON
     public List<T> toList() {
-        List<T> list = new ArrayList<>();
+        List<T> lista = new ArrayList<>();
         Node<T> current = head;
         while (current != null) {
-            list.add(current.getData());
+
+            lista.add(current.getData());
             current = current.getNext();
         }
-        return list;
+        return lista;
     }
 }

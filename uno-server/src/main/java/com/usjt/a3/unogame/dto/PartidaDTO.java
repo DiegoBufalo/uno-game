@@ -29,7 +29,7 @@ public class PartidaDTO {
         dto.setBloqueado(partida.getBloqueado());
         dto.setComprasObrigatorias(partida.getComprasObrigatorias());
         dto.setEscolheCor(partida.getEscolheCor());
-        dto.setIdJogadorAtual(partida.getJogadores().getCurrent().getId());
+        dto.setIdJogadorAtual(partida.getJogadores().getPosicaoAtual().getId());
 
         return dto;
     }
