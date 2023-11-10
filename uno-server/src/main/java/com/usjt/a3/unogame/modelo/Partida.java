@@ -71,6 +71,7 @@ public class Partida {
     public void skipMethod() {
         this.bloqueado = true;
         proximoJogador();
+        proximoJogador();
     }
 
     public void changeColor() {
@@ -81,11 +82,19 @@ public class Partida {
     public void draw2Method() {
         this.comprasObrigatorias = (2);
         proximoJogador();
+        compraCarta();
+        compraCarta();
+        proximoJogador();
     }
 
     public void draw4Method() {
         this.comprasObrigatorias = 4;
         this.escolheCor = true;
+        proximoJogador();
+        compraCarta();
+        compraCarta();
+        compraCarta();
+        compraCarta();
         proximoJogador();
     }
 
