@@ -9,6 +9,11 @@ import com.usjt.a3.unogame.modelo.Carta;
 public class ListaEncadeada<T> {
     private Node<T> head;
 
+
+    public boolean isEmpty() {
+        return head == null;
+    }
+
     public void add(T data) {
         Node<T> newNode = new Node<>(data);
         if (head == null) {
@@ -43,10 +48,35 @@ public class ListaEncadeada<T> {
         }
     }
 
-    public Carta findCarta(String id) {
+    public Carta findCartaById(String id) {
         Node<Carta> current = (Node<Carta>) head;
         while (current != null) {
             if (current.getData().getId().equals(id)) {
+                return current.getData();
+            }
+            current = current.getNext();
+        }
+        return null; // Retorna null se o elemento não for encontrado.
+    }
+
+    public Carta buscaCartaParaDescartar(String color, String value) {
+        Node<Carta> current = (Node<Carta>) head;
+        while (current != null) {
+            if (current.getData().getCor().equals(color) ||
+                    current.getData().getValor().equals(value) ||
+                    current.getData().getCor().equals("wild")) {
+
+                return current.getData();
+            }
+            current = current.getNext();
+        }
+        return null; // Retorna null se o elemento não for encontrado.
+    }
+
+    public Carta findFirstColorNotLike(String color) {
+        Node<Carta> current = (Node<Carta>) head;
+        while (current != null) {
+            if (!current.getData().getCor().equals(color)) {
                 return current.getData();
             }
             current = current.getNext();

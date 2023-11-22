@@ -3,7 +3,8 @@ import "./uno.css";
 import { GameInfoState, Jogador, Carta } from "interfaces";
 import { api } from "utils/api";
 import { Modal, Box } from "@mui/material";
-import ChooseColor from "./color";
+import { ChooseColor } from "./color";
+import { InitGame } from "./init";
 
 const styleModal = {
   position: "absolute",
@@ -18,9 +19,11 @@ const styleModal = {
 };
 
 function UnoGame() {
-  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => { setOpen(false); setModalType('ChooseColor')};
+
+  const [modalType, setModalType] = useState<'ChooseName' | 'ChooseColor'>('ChooseName');
+  const [open, setOpen] = useState(true);
   const [state, setState] = useState<GameInfoState>({
     jogadores: [],
     monte: [],
@@ -28,8 +31,10 @@ function UnoGame() {
     direcao: "DIREITA",
     bloqueado: false,
     comprasObrigatorias: 0,
-    escolheCor: false,
     idJogadorAtual: 0,
+    jogadorAtualIsBot: false,
+    jogoFinalizado: false,
+    jogadorVencedor : ''
   });
 
   const modoDev = window.location.pathname.includes("modoDev");
@@ -39,6 +44,26 @@ function UnoGame() {
     state.jogadores[
       state.jogadores.findIndex((j) => j.id === state.idJogadorAtual)
     ];
+
+
+    const reiniciaPartida = () => {
+      api
+        .put("/reinicia-partida")
+        .then((resp) => {
+          setState(resp.data);
+        })
+        .catch((err) => {
+          alert(err.message);
+        });
+    };
+
+  const verificaVencedor = (jogoFinalizado: boolean, nomeVencedor: string) => {
+    if (jogoFinalizado) {
+      alert('Jogador vencedor é: ' + nomeVencedor)
+      reiniciaPartida();
+      location.reload();
+    }
+  };
 
   const comprarCarta = () => {
     api
@@ -51,12 +76,29 @@ function UnoGame() {
       });
   };
 
-  const descartarCarta = (cartaId: string) => {
-    handleOpen();
+  const descartarCarta = (cartaId: string, cartaCor: string) => {
+    if (cartaCor === 'wild') {
+      handleOpen();
+    }
+
     api
       .put(`/descarta-carta/${cartaId}`)
       .then((resp) => {
         setState(resp.data);
+        verificaVencedor(resp.data.jogoFinalizado, resp.data.jogadorVencedor);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+
+
+  const jogadaBot = () => {
+    api
+      .put("/jogada-bot")
+      .then((resp) => {
+        setState(resp.data);
+        verificaVencedor(resp.data.jogoFinalizado, resp.data.jogadorVencedor);
       })
       .catch((err) => {
         alert(err.message);
@@ -64,21 +106,11 @@ function UnoGame() {
   };
 
   useEffect(() => {
-    api
-      .post("/init?nomeJogador=Messi")
-      .then((resp) => {
-        setState(resp.data);
-      })
-      .catch((err) => {
-        alert(err.message);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (state.escolheCor) {
-      handleOpen();
+    if (state.jogadorAtualIsBot && state.idJogadorAtual != 0 && !open) {
+      setTimeout(() => jogadaBot(), 3000);
     }
-  }, [state.escolheCor]);
+
+  }, [state.jogadorAtualIsBot, state.idJogadorAtual, open]);
 
   return (
     <>
@@ -89,11 +121,13 @@ function UnoGame() {
         aria-describedby="modal-modal-description"
       >
         <Box className="box" sx={styleModal}>
-          <ChooseColor />
+          {modalType === 'ChooseName' ? (<InitGame setState={setState} close={handleClose} />):null}
+          {modalType === 'ChooseColor' ? (<ChooseColor close={handleClose} />):null}
         </Box>
       </Modal>
       <div className="container">
         <div className="centro">
+          <span>{state.corAtual}</span>
           <div onClick={() => comprarCarta()} className="monte">
             <img src="src/assets/generic/deck.png" alt="deck" />
           </div>
@@ -121,7 +155,11 @@ function UnoGame() {
                               <div
                                 key={c.id}
                                 className="carta"
-                                onClick={() => descartarCarta(c.id)}
+                                onClick={() => {
+                                  if (!state.jogadorAtualIsBot) {
+                                    descartarCarta(c.id, c.cor)
+                                  }
+                                }}
                               >
                                 {j.isBot && !modoDev ? (
                                   <img

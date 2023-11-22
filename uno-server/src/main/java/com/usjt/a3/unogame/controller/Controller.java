@@ -2,12 +2,7 @@ package com.usjt.a3.unogame.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.usjt.a3.unogame.dto.PartidaDTO;
 import com.usjt.a3.unogame.modelo.Partida;
@@ -16,7 +11,7 @@ import com.usjt.a3.unogame.modelo.Partida;
 @RequestMapping("api")
 public class Controller {
 
-    private ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     @Autowired
     public Controller(ApplicationContext applicationContext) {
@@ -33,21 +28,51 @@ public class Controller {
         partida.setBloqueado(partidaConfigurada.getBloqueado());
         partida.setComprasObrigatorias(partidaConfigurada.getComprasObrigatorias());
         partida.setDirecao(partidaConfigurada.getDirecao());
-        partida.setEscolheCor(partidaConfigurada.getEscolheCor());
+        partida.setCorAtual(partidaConfigurada.getCorAtual());
+        partida.setJogadorVencedor("");
+        partida.setJogoFinalizado(false);
+
         return PartidaDTO.fromPartida(partida);
     }
 
     @PutMapping("/compra-carta")
     public PartidaDTO compraCarta() {
         Partida partida = applicationContext.getBean(Partida.class);
-        partida.compraCarta();
+        if (!partida.getJogadores().getPosicaoAtual().isBot()) {
+            partida.compraCarta();
+        }
         return PartidaDTO.fromPartida(partida);
     }
 
     @PutMapping("/descarta-carta/{cartaId}")
     public PartidaDTO descartaCarta(@PathVariable String cartaId) {
         Partida partida = applicationContext.getBean(Partida.class);
-        partida.descartaCarta(cartaId);
+        if (!partida.getJogadores().getPosicaoAtual().isBot()) {
+            partida.descartaCarta(cartaId);
+        }
         return PartidaDTO.fromPartida(partida);
+    }
+
+    @PutMapping("/definir-cor/{cor}")
+    public PartidaDTO definirCorWild(@PathVariable String cor) {
+        Partida partida = applicationContext.getBean(Partida.class);
+        if (!partida.getJogadores().getPosicaoAtual().isBot()) {
+            partida.defineCor(cor);
+        }
+        return PartidaDTO.fromPartida(partida);
+    }
+
+    @PutMapping("/jogada-bot")
+    public PartidaDTO jogadaBot() {
+        Partida partida = applicationContext.getBean(Partida.class);
+        if (partida.getJogadores().getPosicaoAtual().isBot()) {
+            partida.jogadaBot();
+        }
+        return PartidaDTO.fromPartida(partida);
+    }
+
+    @DeleteMapping("/reinicia-partida")
+    public void reiniciaPartida() {
+        this.init("Jogador");
     }
 }

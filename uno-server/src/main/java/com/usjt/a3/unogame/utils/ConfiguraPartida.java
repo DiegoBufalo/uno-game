@@ -7,33 +7,35 @@ import com.usjt.a3.unogame.modelo.Partida;
 
 public class ConfiguraPartida {
 
+    private ConfiguraPartida() {
+    }
+
     public static void initConfig(Partida partida, String nomeJogador) {
         String[] coresCarta = new String[] { "red", "green", "yellow", "blue" };
-        String[] valoresCarta = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "draw", "reverse",
-                "skip" };
+        String[] valoresCarta = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "draw", "reverse", "skip" };
 
         // Coloca duas +4 e duas troca de cor
-        partida.getMonte().push(new Carta("wild", "draw", () -> partida.draw4Method()));
-        partida.getMonte().push(new Carta("wild", "draw", () -> partida.draw4Method()));
-        partida.getMonte().push(new Carta("wild", "change", () -> partida.changeColor()));
-        partida.getMonte().push(new Carta("wild", "change", () -> partida.changeColor()));
+        partida.getMonte().push(new Carta("wild", "draw", partida::draw4Method));
+        partida.getMonte().push(new Carta("wild", "draw", partida::draw4Method));
+        partida.getMonte().push(new Carta("wild", "change", partida::changeColor));
+        partida.getMonte().push(new Carta("wild", "change", partida::changeColor));
 
-        for (int i = 0; i < coresCarta.length; i++) {
-            for (int y = 0; y < valoresCarta.length; y++) {
-                Carta carta = new Carta(coresCarta[i], valoresCarta[y]);
+        for (String string : coresCarta) {
+            for (String s : valoresCarta) {
+                Carta carta = new Carta(string, s);
 
-                switch (valoresCarta[y]) {
+                switch (s) {
                     case "draw":
-                        carta.setAcaoCarta(() -> partida.draw2Method());
+                        carta.setAcaoCarta(partida::draw2Method);
                         break;
                     case "reverse":
-                        carta.setAcaoCarta(() -> partida.reverseMethod());
+                        carta.setAcaoCarta(partida::reverseMethod);
                         break;
                     case "skip":
-                        carta.setAcaoCarta(() -> partida.skipMethod());
+                        carta.setAcaoCarta(partida::skipMethod);
                         break;
                     default:
-                        carta.setAcaoCarta(() -> partida.proximoJogador());
+                        carta.setAcaoCarta(partida::proximoJogador);
                         break;
                 }
 
@@ -64,7 +66,12 @@ public class ConfiguraPartida {
         partida.getJogadores().add(jogador4);
         partida.getJogadores().moveNext();
 
-        partida.getDescarte().push(partida.getMonte().pop());
+        Carta descarte;
+        do {
+            descarte = partida.getMonte().pop();
+            partida.getDescarte().push(descarte);
+            partida.setCorAtual(descarte.getCor());
+        } while (descarte.getCor().equals("wild"));
 
     }
 

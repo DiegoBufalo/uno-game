@@ -19,6 +19,9 @@ export interface GameInfoState {
     direcao: 'ESQUERDA' | 'DIREITA';
     bloqueado: boolean;
     comprasObrigatorias: number;
-    escolheCor: boolean;
     idJogadorAtual: number;
-}
+    jogadorAtualIsBot: boolean;
+    corAtual?: 'red' | 'blue' | 'green' | 'yellow';
+    jogoFinalizado: boolean;
+    jogadorVencedor: string;
+ }

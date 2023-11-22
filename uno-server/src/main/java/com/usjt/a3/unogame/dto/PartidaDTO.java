@@ -11,14 +11,17 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PartidaDTO {
-    private List<JogadorDTO> jogadores = new ArrayList<JogadorDTO>();
-    private List<CartaDTO> monte = new ArrayList<CartaDTO>();
-    private List<CartaDTO> descarte = new ArrayList<CartaDTO>();
+    private List<JogadorDTO> jogadores = new ArrayList<>();
+    private List<CartaDTO> monte = new ArrayList<>();
+    private List<CartaDTO> descarte = new ArrayList<>();
     private String direcao;
     private Boolean bloqueado;
     private Integer comprasObrigatorias;
-    private Boolean escolheCor;
     private Long idJogadorAtual;
+    private Boolean jogadorAtualIsBot;
+    private String corAtual;
+    private Boolean jogoFinalizado;
+    private String jogadorVencedor;
 
     public static PartidaDTO fromPartida(Partida partida) {
         PartidaDTO dto = new PartidaDTO();
@@ -28,8 +31,11 @@ public class PartidaDTO {
         dto.setDirecao(partida.getDirecao().name());
         dto.setBloqueado(partida.getBloqueado());
         dto.setComprasObrigatorias(partida.getComprasObrigatorias());
-        dto.setEscolheCor(partida.getEscolheCor());
         dto.setIdJogadorAtual(partida.getJogadores().getPosicaoAtual().getId());
+        dto.setJogadorAtualIsBot(partida.getJogadores().getPosicaoAtual().isBot());
+        dto.setCorAtual(partida.getCorAtual());
+        dto.setJogadorVencedor(partida.getJogadorVencedor());
+        dto.setJogoFinalizado(partida.getJogoFinalizado());
 
         return dto;
     }

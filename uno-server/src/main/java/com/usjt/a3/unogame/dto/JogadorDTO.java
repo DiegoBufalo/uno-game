@@ -16,13 +16,13 @@ public class JogadorDTO {
     private Long id;
     private String nome;
     private Boolean isBot;
-    private List<CartaDTO> mao = new ArrayList<CartaDTO>();
+    private List<CartaDTO> mao = new ArrayList<>();
 
     public static JogadorDTO fromJogador(Jogador jogador) {
         JogadorDTO dto = new JogadorDTO();
         dto.id = jogador.getId();
         dto.nome = jogador.getNome();
-        dto.isBot = jogador.getIsBot();
+        dto.isBot = jogador.isBot();
         dto.mao = CartaDTO.fromCarta(jogador.getMao());
         return dto;
     }

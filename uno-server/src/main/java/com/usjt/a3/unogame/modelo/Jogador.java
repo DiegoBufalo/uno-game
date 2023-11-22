@@ -10,8 +10,8 @@ import lombok.Setter;
 public class Jogador {
     private Long id;
     private String nome;
-    private Boolean isBot = false;
-    private ListaEncadeada<Carta> mao = new ListaEncadeada<Carta>();
+    private boolean isBot = false;
+    private ListaEncadeada<Carta> mao = new ListaEncadeada<>();
 
     public Jogador(Long id, String nome, Boolean isBot) {
         this.id = id;
