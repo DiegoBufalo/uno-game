@@ -1,15 +1,25 @@
 import { Grid, Paper } from "@mui/material";
+import { GameInfoState } from "interfaces";
 import React, { Dispatch, SetStateAction } from "react";
 import { api } from "utils/api";
 
 interface ChooseColorInterface {
   close: Dispatch<SetStateAction<void>>;
+  setState: Dispatch<SetStateAction<GameInfoState>>;
 }
 
-export const ChooseColor:React.FC<ChooseColorInterface> = ({ close }) => {
-  const defineCor = (cor: string) => {
+export const ChooseColor:React.FC<ChooseColorInterface> = ({ close, setState }) => {
+  const defineCor = (cor: 'red' | 'blue' | 'green' | 'yellow') => {
     api
       .put(`/definir-cor/${cor}`)
+      .then(() => {
+        setState((prev) => {
+          return {
+            ...prev, 
+            corAtual: cor
+          }
+        })
+      })
       .catch((err) => {
         alert(err.message);
       }).finally(() => close());

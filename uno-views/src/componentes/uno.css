@@ -135,10 +135,40 @@ body {
   height: 160px;
 }
 
-.cartas-1 > .carta > img:hover,
-.cartas-2 > .carta > img:hover,
-.cartas-3 > .carta > img:hover,
-.cartas-4 > .carta > img:hover {
+.game-info {
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  top: 58%;
+  left: 42%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.yellow {
+  color: yellow;
+}
+
+/* .cartas-1 > .carta > img:hover, */
+.cartas-2 > .carta > img:hover {
+/* .cartas-3 > .carta > img:hover,
+.cartas-4 > .carta > img:hover { */
   position: relative;
   bottom: 50px;
   cursor: pointer;

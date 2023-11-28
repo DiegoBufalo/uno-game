@@ -1,4 +1,4 @@
-import { Children, useState, useEffect } from "react";
+import { Children, useState, useEffect, useCallback } from "react";
 import "./uno.css";
 import { GameInfoState, Jogador, Carta } from "interfaces";
 import { api } from "utils/api";
@@ -44,6 +44,26 @@ function UnoGame() {
     state.jogadores[
       state.jogadores.findIndex((j) => j.id === state.idJogadorAtual)
     ];
+
+
+  const sentidoPartida = useCallback(() => {
+    return `Sentido atual: ${state.direcao === 'ESQUERDA' ? '↺' :'↻' }`
+  },[state.direcao])
+
+  const corAtual = useCallback(() => {
+    switch (state.corAtual) {
+      case 'red':
+        return "Vermelho";
+      case 'yellow':
+      return "Amarelo";
+      case 'blue':
+      return "Azul";
+      case 'green':
+      return "Verde";
+      default:
+        return 'Desconhecido';
+    }
+  },[state.corAtual])
 
 
     const reiniciaPartida = () => {
@@ -122,12 +142,23 @@ function UnoGame() {
       >
         <Box className="box" sx={styleModal}>
           {modalType === 'ChooseName' ? (<InitGame setState={setState} close={handleClose} />):null}
-          {modalType === 'ChooseColor' ? (<ChooseColor close={handleClose} />):null}
+          {modalType === 'ChooseColor' ? (<ChooseColor setState={setState} close={handleClose} />):null}
         </Box>
       </Modal>
       <div className="container">
+      <div className="game-info">
+        <div className="actual-color">
+        {`Cor Atual: `}
+          <span className={state.corAtual}>
+            {corAtual()}
+          </span>
+        </div>
+        <div className="actual-player">{`Jogador Atual: ${jogadorAtual ? jogadorAtual.nome : 'Desconhecido'}`}</div>
+        <div className="actual-direction">
+          {sentidoPartida()}
+        </div>
+      </div>
         <div className="centro">
-          <span>{state.corAtual}</span>
           <div onClick={() => comprarCarta()} className="monte">
             <img src="src/assets/generic/deck.png" alt="deck" />
           </div>
