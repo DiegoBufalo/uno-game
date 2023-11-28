@@ -1,31 +1,48 @@
-# React + TypeScript + Vite
+# Projeto UNO: Estrutura de dados Uno
 
-Este projeto acadêmico tem como objetivo desenvolver um jogo de Uno offline para um jogador, onde o jogador jogará contra bots. O jogo será implementado usando estruturas de dados de alto desempenho, com o objetivo de demonstrar o poder dessas estruturas.
+Grupo: 8
 
-Objetivos
+Projeto escolhido: Uno
 
-Os objetivos específicos do projeto são:
+Motivo:
 
-- Desenvolver um jogo de Uno offline para um jogador.
-- Implementar o jogo usando estruturas de dados de alto desempenho.
-- Demonstrar o poder das estruturas de dados usando o jogo.
+- nos foi dado um desafio: implementar um projeto utilizando estruturas de dados em memória principal.
+  nos foi dadas algumas opções de projeto escolhemos criar um jogo de UNO, onde um jogador
+  poderá entrar em um uma partida com outros 3 bots que jogam automaticamente.
+  O jogo neste projeto tem como objetivo a visualização das estruturas de dados utilizadas.
 
-Metodologia
+Estruturas de dados utilizadas no projeto:
 
-O jogo será desenvolvido usando TypeScript, uma linguagem de programação orientada a objetos que é compatível com JavaScript. As estruturas de dados serão implementadas usando as bibliotecas padrões do TypeScript.
+- Lista circular duplamente encadeada: essa lista teve o objetivo de armazenar a ordem dos jogadores e tornar possível,
+  seguir para o proximo ou para o jogador anterior, dependendo da carta lançada.
+- Pilhas: as pilhas vieram com o objetivo de armazenar as cartas disponíveis para compra e armazenar as cartas descartadas durante a partida.
+- Lista singularmente encadeada: essa lista serve para armazenar a "mão" de cartas de cada jogador. foi utilizada uma lista encadeada pois as
+  buscas necessárias no projeto não possuem muita complexidade.
 
-O jogo será projetado para ser eficiente e usar o mínimo de recursos. As estruturas de dados serão selecionadas com base em seu desempenho e adequação ao jogo.
+Modelos:
 
-Resultados esperados
+- Carta
+- Jogador
+- Partida
 
-O projeto deve resultar no desenvolvimento de um jogo de Uno offline que seja eficiente e divertido de jogar. O jogo também deve demonstrar o poder das estruturas de dados, mostrando como elas podem ser usadas para criar aplicações complexas e de alto desempenho.
+Utilitários:
 
-Conclusão
-
-Este projeto é uma oportunidade para desenvolver habilidades em programação e estruturas de dados. O jogo desenvolvido será um produto de valor para a comunidade de jogos.
+- Gerador de nomes
+- Configurador
 
 ## Tecnologias
 
-- TypeScript
-- Vite
-- React
+- Java para as estruturas de dados e as regras do jogo
+- TypeScript e react para a visualização grafica do jogo
+- Vite para realizar o build da aplicação
+
+### Iniciar
+
+- uno-views/npm install
+- uno-views/npm run dev
+- uno-server/ spring-boot:run
+
+### requisitos
+
+- Node 16.x ou maiores
+- Java 11.0.x ou maiores
