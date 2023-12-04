@@ -14,6 +14,8 @@ public class ListaEncadeada<T> {
         return head == null;
     }
 
+    // adiciona um novo elemento à lista, caso head seja nulo adiciona no head, caso contrário 
+    // é inserido no next do ultimo elemento da lista
     public void add(T data) {
         Node<T> newNode = new Node<>(data);
         if (head == null) {

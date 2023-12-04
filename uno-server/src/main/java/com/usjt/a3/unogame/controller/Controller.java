@@ -25,8 +25,6 @@ public class Controller {
         partida.setJogadores(partidaConfigurada.getJogadores());
         partida.setMonte(partidaConfigurada.getMonte());
         partida.setDescarte(partidaConfigurada.getDescarte());
-        partida.setBloqueado(partidaConfigurada.getBloqueado());
-        partida.setComprasObrigatorias(partidaConfigurada.getComprasObrigatorias());
         partida.setDirecao(partidaConfigurada.getDirecao());
         partida.setCorAtual(partidaConfigurada.getCorAtual());
         partida.setJogadorVencedor("");

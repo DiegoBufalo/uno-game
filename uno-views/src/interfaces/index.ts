@@ -17,8 +17,6 @@ export interface GameInfoState {
     monte: Carta[];
     descarte: Carta[];
     direcao: 'ESQUERDA' | 'DIREITA';
-    bloqueado: boolean;
-    comprasObrigatorias: number;
     idJogadorAtual: number;
     jogadorAtualIsBot: boolean;
     corAtual?: 'red' | 'blue' | 'green' | 'yellow';

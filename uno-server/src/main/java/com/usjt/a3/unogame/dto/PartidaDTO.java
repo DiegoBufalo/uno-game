@@ -15,8 +15,6 @@ public class PartidaDTO {
     private List<CartaDTO> monte = new ArrayList<>();
     private List<CartaDTO> descarte = new ArrayList<>();
     private String direcao;
-    private Boolean bloqueado;
-    private Integer comprasObrigatorias;
     private Long idJogadorAtual;
     private Boolean jogadorAtualIsBot;
     private String corAtual;
@@ -29,8 +27,6 @@ public class PartidaDTO {
         dto.setMonte(CartaDTO.fromCarta(partida.getMonte()));
         dto.setDescarte(CartaDTO.fromCarta(partida.getDescarte()));
         dto.setDirecao(partida.getDirecao().name());
-        dto.setBloqueado(partida.getBloqueado());
-        dto.setComprasObrigatorias(partida.getComprasObrigatorias());
         dto.setIdJogadorAtual(partida.getJogadores().getPosicaoAtual().getId());
         dto.setJogadorAtualIsBot(partida.getJogadores().getPosicaoAtual().isBot());
         dto.setCorAtual(partida.getCorAtual());

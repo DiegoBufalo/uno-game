@@ -19,8 +19,6 @@ public class Partida {
     private Pilha<Carta> monte = new Pilha<>();
     private Pilha<Carta> descarte = new Pilha<>();
     private Direcao direcao = Direcao.DIREITA;
-    private Boolean bloqueado = false;
-    private Integer comprasObrigatorias = 0;
     private String corAtual = "";
     private Boolean jogoFinalizado = false;
     private String jogadorVencedor = "";
@@ -134,7 +132,6 @@ public class Partida {
     }
 
     public void skipMethod() {
-        this.bloqueado = true;
         proximoJogador();
         proximoJogador();
     }
@@ -144,7 +141,6 @@ public class Partida {
     }
 
     public void draw2Method() {
-        this.comprasObrigatorias = (2);
         proximoJogador();
         compraCarta();
         compraCarta();
@@ -152,7 +148,6 @@ public class Partida {
     }
 
     public void draw4Method() {
-        this.comprasObrigatorias = 4;
         proximoJogador();
         compraCarta();
         compraCarta();

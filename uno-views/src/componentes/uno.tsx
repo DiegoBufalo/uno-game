@@ -20,21 +20,24 @@ const styleModal = {
 
 function UnoGame() {
   const handleOpen = () => setOpen(true);
-  const handleClose = () => { setOpen(false); setModalType('ChooseColor')};
+  const handleClose = () => {
+    setOpen(false);
+    setModalType("ChooseColor");
+  };
 
-  const [modalType, setModalType] = useState<'ChooseName' | 'ChooseColor'>('ChooseName');
+  const [modalType, setModalType] = useState<"ChooseName" | "ChooseColor">(
+    "ChooseName"
+  );
   const [open, setOpen] = useState(true);
   const [state, setState] = useState<GameInfoState>({
     jogadores: [],
     monte: [],
     descarte: [],
     direcao: "DIREITA",
-    bloqueado: false,
-    comprasObrigatorias: 0,
     idJogadorAtual: 0,
     jogadorAtualIsBot: false,
     jogoFinalizado: false,
-    jogadorVencedor : ''
+    jogadorVencedor: "",
   });
 
   const modoDev = window.location.pathname.includes("modoDev");
@@ -45,41 +48,39 @@ function UnoGame() {
       state.jogadores.findIndex((j) => j.id === state.idJogadorAtual)
     ];
 
-
-  const sentidoPartida = useCallback(() => {
-    return `Sentido atual: ${state.direcao === 'ESQUERDA' ? '↺' :'↻' }`
-  },[state.direcao])
+  // const sentidoPartida = useCallback(() => {
+  //   return `Sentido atual: ${state.direcao === "ESQUERDA" ? "↺" : "↻"}`;
+  // }, [state.direcao]);
 
   const corAtual = useCallback(() => {
     switch (state.corAtual) {
-      case 'red':
+      case "red":
         return "Vermelho";
-      case 'yellow':
-      return "Amarelo";
-      case 'blue':
-      return "Azul";
-      case 'green':
-      return "Verde";
+      case "yellow":
+        return "Amarelo";
+      case "blue":
+        return "Azul";
+      case "green":
+        return "Verde";
       default:
-        return 'Desconhecido';
+        return "Desconhecido";
     }
-  },[state.corAtual])
+  }, [state.corAtual]);
 
-
-    const reiniciaPartida = () => {
-      api
-        .put("/reinicia-partida")
-        .then((resp) => {
-          setState(resp.data);
-        })
-        .catch((err) => {
-          alert(err.message);
-        });
-    };
+  const reiniciaPartida = () => {
+    api
+      .put("/reinicia-partida")
+      .then((resp) => {
+        setState(resp.data);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   const verificaVencedor = (jogoFinalizado: boolean, nomeVencedor: string) => {
     if (jogoFinalizado) {
-      alert('Jogador vencedor é: ' + nomeVencedor)
+      alert("Jogador vencedor é: " + nomeVencedor);
       reiniciaPartida();
       location.reload();
     }
@@ -97,7 +98,7 @@ function UnoGame() {
   };
 
   const descartarCarta = (cartaId: string, cartaCor: string) => {
-    if (cartaCor === 'wild') {
+    if (cartaCor === "wild") {
       handleOpen();
     }
 
@@ -111,7 +112,6 @@ function UnoGame() {
         alert(err.message);
       });
   };
-
 
   const jogadaBot = () => {
     api
@@ -129,7 +129,6 @@ function UnoGame() {
     if (state.jogadorAtualIsBot && state.idJogadorAtual != 0 && !open) {
       setTimeout(() => jogadaBot(), 3000);
     }
-
   }, [state.jogadorAtualIsBot, state.idJogadorAtual, open]);
 
   return (
@@ -141,23 +140,27 @@ function UnoGame() {
         aria-describedby="modal-modal-description"
       >
         <Box className="box" sx={styleModal}>
-          {modalType === 'ChooseName' ? (<InitGame setState={setState} close={handleClose} />):null}
-          {modalType === 'ChooseColor' ? (<ChooseColor setState={setState} close={handleClose} />):null}
+          {modalType === "ChooseName" ? (
+            <InitGame setState={setState} close={handleClose} />
+          ) : null}
+          {modalType === "ChooseColor" ? (
+            <ChooseColor setState={setState} close={handleClose} />
+          ) : null}
         </Box>
       </Modal>
       <div className="container">
-      <div className="game-info">
-        <div className="actual-color">
-        {`Cor Atual: `}
-          <span className={state.corAtual}>
-            {corAtual()}
-          </span>
-        </div>
-        <div className="actual-player">{`Jogador Atual: ${jogadorAtual ? jogadorAtual.nome : 'Desconhecido'}`}</div>
-        <div className="actual-direction">
+        <div className="game-info">
+          <div className="actual-color">
+            {`Cor Atual: `}
+            <span className={state.corAtual}>{corAtual()}</span>
+          </div>
+          <div className="actual-player">{`Jogador Atual: ${
+            jogadorAtual ? jogadorAtual.nome : "Desconhecido"
+          }`}</div>
+          {/* <div className="actual-direction">
           {sentidoPartida()}
+        </div> */}
         </div>
-      </div>
         <div className="centro">
           <div onClick={() => comprarCarta()} className="monte">
             <img src="src/assets/generic/deck.png" alt="deck" />
@@ -188,7 +191,7 @@ function UnoGame() {
                                 className="carta"
                                 onClick={() => {
                                   if (!state.jogadorAtualIsBot) {
-                                    descartarCarta(c.id, c.cor)
+                                    descartarCarta(c.id, c.cor);
                                   }
                                 }}
                               >

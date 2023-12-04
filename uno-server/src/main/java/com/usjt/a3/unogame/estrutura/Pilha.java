@@ -50,7 +50,9 @@ public class Pilha<T> {
             current = current.getNext();
         }
 
-        // Embaralhar o array usando o algoritmo Fisher-Yates
+        // Embaralhar o array usando o algoritmo Fisher-Yates 
+        // O algoritmo pega uma lista de todos os elementos da sequência e determina continuamente o próximo elemento na sequência embaralhada
+        // desenhando aleatoriamente um elemento da lista até que nenhum elemento permaneça.
         Random rand = new Random();
         for (int i = size - 1; i > 0; i--) {
             int j = rand.nextInt(i + 1);
